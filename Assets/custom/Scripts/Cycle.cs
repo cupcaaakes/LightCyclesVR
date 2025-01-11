@@ -7,6 +7,7 @@ public class Cycle : MonoBehaviour
     [SerializeField] private SteeringWheel steeringWheel; // Reference to the SteeringWheel script
     [SerializeField] private float forwardSpeed = 10f; // Constant forward speed
     [SerializeField] private float turnSpeed = 5f; // Speed at which the motorcycle turns
+    [SerializeField] private float deadZone = 5f;
 
     private void Update()
     {
@@ -17,9 +18,7 @@ public class Cycle : MonoBehaviour
         if (steeringWheel != null)
         {
             float steeringAngle = steeringWheel.SteeringAngle;
-
-            // Calculate the yaw rotation
-            Quaternion targetRotation = Quaternion.Euler(0, -(steeringAngle * turnSpeed), 0);
+            Quaternion targetRotation = (steeringAngle < deadZone && steeringAngle > -deadZone)? Quaternion.identity : Quaternion.Euler(0, -(steeringAngle * turnSpeed), 0);
 
             // Apply the yaw rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * targetRotation, Time.deltaTime);

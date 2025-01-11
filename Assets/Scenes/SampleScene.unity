@@ -15462,6 +15462,7 @@ MonoBehaviour:
   steeringWheel: {fileID: 494099264}
   forwardSpeed: 3
   turnSpeed: 50
+  deadZone: 17.5
 --- !u!1 &1221750873
 GameObject:
   m_ObjectHideFlags: 0

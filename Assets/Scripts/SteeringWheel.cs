@@ -6,6 +6,9 @@ public class SteeringWheel : MonoBehaviour
     public OVRInput.Controller RightController = OVRInput.Controller.RTouch;
 
     [SerializeField] private Transform handlebarCenter; // The center point of the handlebar
+    [SerializeField] private float maxSteeringAngle = 90f; // Maximum steering angle
+    [SerializeField] private float tiltSensitivity = 90f; // Sensitivity for tilt calculation
+
     public float SteeringAngle { get; private set; }
     public float TiltAngle { get; private set; }
 
@@ -17,18 +20,17 @@ public class SteeringWheel : MonoBehaviour
 
         // Calculate the horizontal steering angle
         Vector3 handlebarDirection = rightControllerPosition - leftControllerPosition;
-        SteeringAngle = Vector3.SignedAngle(Vector3.right, handlebarDirection, Vector3.forward);
+        SteeringAngle = Mathf.Clamp(Vector3.SignedAngle(Vector3.right, handlebarDirection, Vector3.forward), -maxSteeringAngle, maxSteeringAngle);
 
         // Calculate the tilt angle based on vertical difference
         float verticalDifference = rightControllerPosition.y - leftControllerPosition.y;
-        TiltAngle = Mathf.Clamp(verticalDifference * 45f, -45f, 45f);
+        TiltAngle = Mathf.Clamp(verticalDifference * tiltSensitivity, -tiltSensitivity, tiltSensitivity);
 
         // Apply the tilt angle only on the local X-axis
         if (handlebarCenter != null)
         {
-            Vector3 currentRotation = handlebarCenter.localEulerAngles; // Get the current local rotation
-            currentRotation.x = TiltAngle; // Update only the X-axis for tilt
-            handlebarCenter.localEulerAngles = currentRotation; // Apply the new rotation
+            Vector3 targetRotation = new Vector3(TiltAngle, 0, SteeringAngle); // Desired rotation
+            handlebarCenter.localRotation = Quaternion.Euler(targetRotation); // Directly apply the rotation
         }
     }
 }

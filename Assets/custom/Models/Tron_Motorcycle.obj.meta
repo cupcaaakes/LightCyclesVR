@@ -3,11 +3,21 @@ guid: e79534849662dfb4b82dcc0f1f2777dc
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blue_Neon
+    second: {fileID: 2100000, guid: b0c7191739ee1624c8a0de34c4d2dff8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tron_Motorcycle
+    second: {fileID: 2100000, guid: 9dbfc32342a3d6b448d09b3a49a31127, type: 2}
   materials:
     materialImportMode: 2
-    materialName: 0
-    materialSearch: 1
+    materialName: 2
+    materialSearch: 0
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4

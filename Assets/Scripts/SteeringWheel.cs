@@ -29,7 +29,7 @@ public class SteeringWheel : MonoBehaviour
         // Apply the tilt angle only on the local X-axis
         if (handlebarCenter != null)
         {
-            Vector3 targetRotation = new Vector3(TiltAngle, 0, SteeringAngle); // Desired rotation
+            Vector3 targetRotation = new Vector3(TiltAngle, 0, 0); // Desired rotation
             handlebarCenter.localRotation = Quaternion.Euler(targetRotation); // Directly apply the rotation
         }
     }

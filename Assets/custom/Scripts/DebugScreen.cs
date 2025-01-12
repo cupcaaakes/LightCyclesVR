@@ -7,6 +7,7 @@ public class DebugScreen : MonoBehaviour
     [SerializeField] private TMP_Text displayText; // Assign in the Inspector
     [SerializeField] private NodeManager nodeManager;
     [SerializeField] private WallManager wallManager;
+    [SerializeField] private Cycle cycle1;
 
     private void Update()
     {
@@ -41,6 +42,7 @@ public class DebugScreen : MonoBehaviour
              $"{wallManager.walls[0].mesh.vertices[3]}\n" +
             $"NEPos: {wallManager.walls[0].NodeEnd.transform.position}\n" +
         */
+            $"DZone1: {cycle1.DeadZoneActive}\n" +
             //$"Nodes: {NodeManager.Instance.Nodes.Count}\n" +
             "end debug";
     }

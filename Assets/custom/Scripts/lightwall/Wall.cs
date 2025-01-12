@@ -45,7 +45,7 @@ public class Wall : MonoBehaviour
 
     public Mesh mesh;
 
-    private static float bottomHeight = -0.007999994f;
+    private static float bottomHeight = -0.05f;
 
 
     public float MidX { get; private set; }

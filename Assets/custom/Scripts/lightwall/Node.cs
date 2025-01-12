@@ -73,7 +73,7 @@ public class Node : MonoBehaviour//, IComparable<Node>
     void Start()
     {
         UpdatePosition();
-        _height = 0.75f; // the height of the light cycle is 0.75.
+        _height = 0.275f; // magic number. Sue me.
     }
 
     /// <summary>

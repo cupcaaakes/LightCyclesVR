@@ -35,16 +35,19 @@ public class WallManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(NodeManager.Instance.PlaceNodesAndCreateWalls());
+        /*
         tempWall = CreateWall(NodeManager.Instance.Nodes[^1], NodeManager.Instance.DragNode.GetComponent<Node>());
         walls.Add(tempWall);
+        */
     }
 
     private void Update()
     {
-        UpdateWall(tempWall);
+        UpdateWall(walls[^1]);
     }
 
-    private Wall CreateWall(Node startNode, Node endNode)
+    public Wall CreateWall(Node startNode, Node endNode)
     {
         // Create a new wall using the wall model
         GameObject wallObject = Instantiate(wallModel, Vector3.zero, Quaternion.identity, transform);

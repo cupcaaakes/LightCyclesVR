@@ -26,10 +26,10 @@ public class DebugScreen : MonoBehaviour
             $"Right Controller Position: {FormatVector3(rightControllerPosition)}\n" +
             $"Steering Angle: {steeringWheel.SteeringAngle:F2}°\n" +
             $"Tilt Angle: {steeringWheel.TiltAngle:F2}°" +
-            */
+            
             $"InitNodePos: {NodeManager.Instance.Nodes[0].transform.position}\n" +
             $"DragNodePos: {NodeManager.Instance.DragNode}\n" +
-            /*
+            
             $"WallPos: {wallManager.walls[0].transform.position}\n"+
             /*
             $"Walls: {wallManager.walls.Count}\n" +
@@ -42,8 +42,10 @@ public class DebugScreen : MonoBehaviour
              $"{wallManager.walls[0].mesh.vertices[3]}\n" +
             $"NEPos: {wallManager.walls[0].NodeEnd.transform.position}\n" +
         */
-            $"DZone1: {cycle1.DeadZoneActive}\n" +
+            //$"DZone1: {cycle1.DeadZoneActive}\n" +
             //$"Nodes: {NodeManager.Instance.Nodes.Count}\n" +
+            $"LastNode: {NodeManager.Instance.Nodes[^1]}\n" +
+            $"Walls: {wallManager.walls.Count}\n" +
             "end debug";
     }
 

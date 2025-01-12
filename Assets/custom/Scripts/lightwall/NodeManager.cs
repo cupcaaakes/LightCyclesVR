@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using System.Collections;
 
 public class NodeManager : MonoBehaviour
 {
@@ -94,6 +95,31 @@ public class NodeManager : MonoBehaviour
 
         return (newNode, newNodeObj);
     }
+
+    public IEnumerator PlaceNodesAndCreateWalls()
+    {
+        while (true)
+        {
+            // Place a new node
+            var (newNode, _) = InstantiateNode(DragNode.transform.position.x, DragNode.transform.position.z);
+            /*
+            Wall oldWall;
+
+            if (WallManager.Instance.walls.Count > 0)
+            {
+                oldWall = WallManager.Instance.walls[^1];
+                oldWall.UpdateWall(newNode, oldWall.NodeStart);
+            }
+            */
+            // Create a wall between DragNode and the new node
+            Wall newWall = WallManager.Instance.CreateWall(DragNode, newNode);
+            WallManager.Instance.walls.Add(newWall);
+            // Wait for half a second
+            yield return new WaitForSeconds(0.5f);
+
+        }
+    }
+
     /*
     public void FinalizeDragNode()
     {

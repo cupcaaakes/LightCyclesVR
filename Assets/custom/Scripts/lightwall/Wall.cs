@@ -131,4 +131,10 @@ public class Wall : MonoBehaviour
 
         UpdatePos();
     }
+
+    public void UpdateWall(Node nodeStart, Node nodeEnd)
+    {
+        this._nodeStart = nodeStart;
+        this._nodeEnd = nodeEnd;
+    }
 }

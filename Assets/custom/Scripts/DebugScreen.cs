@@ -5,6 +5,7 @@ public class DebugScreen : MonoBehaviour
 {
     [SerializeField] private SteeringWheel steeringWheel; // Reference to the SteeringWheel class
     [SerializeField] private TMP_Text displayText; // Assign in the Inspector
+    [SerializeField] private NodeManager nodeManager;
 
     private void Update()
     {
@@ -18,11 +19,14 @@ public class DebugScreen : MonoBehaviour
         Vector3 leftControllerPosition = OVRInput.GetLocalControllerPosition(steeringWheel.LeftController);
         Vector3 rightControllerPosition = OVRInput.GetLocalControllerPosition(steeringWheel.RightController);
 
-        displayText.text =
+        displayText.text =/*
             $"Left Controller Position: {FormatVector3(leftControllerPosition)}\n" +
             $"Right Controller Position: {FormatVector3(rightControllerPosition)}\n" +
             $"Steering Angle: {steeringWheel.SteeringAngle:F2}°\n" +
             $"Tilt Angle: {steeringWheel.TiltAngle:F2}°";
+    */
+            $"Nodes spawned: {nodeManager.NodeCounter}\n" +
+            $"DragNode position: {nodeManager.DragNode.transform.position}";
     }
 
     private string FormatVector3(Vector3 vector)

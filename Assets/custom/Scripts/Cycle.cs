@@ -8,6 +8,12 @@ public class Cycle : MonoBehaviour
     [SerializeField] private float forwardSpeed = 10f; // Constant forward speed
     [SerializeField] private float turnSpeed = 5f; // Speed at which the motorcycle turns
     [SerializeField] private float deadZone = 5f;
+    public bool DeadZoneActive { get; private set; }
+
+    private void Awake()
+    {
+        DeadZoneActive = true;
+    }
 
     private void Update()
     {
@@ -19,6 +25,7 @@ public class Cycle : MonoBehaviour
         {
             float steeringAngle = steeringWheel.SteeringAngle;
             Quaternion targetRotation = (steeringAngle < deadZone && steeringAngle > -deadZone)? Quaternion.identity : Quaternion.Euler(0, -(steeringAngle * turnSpeed), 0);
+            DeadZoneActive = (steeringAngle < deadZone && steeringAngle > -deadZone) ? true : false;
 
             // Apply the yaw rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * targetRotation, Time.deltaTime);

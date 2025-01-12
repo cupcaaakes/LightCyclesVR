@@ -50,12 +50,12 @@ public class Node : MonoBehaviour//, IComparable<Node>
     /// Private height of the node.
     /// </summary>
     [SerializeField]
-    private int _height;
+    private float _height;
 
     /// <summary>
     /// Height of the node.
     /// </summary>
-    public int Height
+    public float Height
     {
         get { return _height; }
         set
@@ -73,7 +73,7 @@ public class Node : MonoBehaviour//, IComparable<Node>
     void Start()
     {
         UpdatePosition();
-        _height = 3; // Default number is now the magic number 3, sue me
+        _height = 0.75f; // the height of the light cycle is 0.75.
     }
 
     /// <summary>
@@ -81,19 +81,21 @@ public class Node : MonoBehaviour//, IComparable<Node>
     /// </summary>
     public void UpdatePosition()
     {
-        if (this != null) transform.position = new Vector3(_x, 0, _z);
+        if (this != null && this != NodeManager.Instance.DragNode) transform.position = new Vector3(_x, 0, _z);;
     }
 
-    /// <summary>
-    /// Deletes the node if there are no walls connected.
-    /// </summary>
-    public void DeleteIfOrphaned()
+    public void UpdatePosition(float x, float z)
     {
-        if (connectedWalls.Count == 0)
+        if(this == NodeManager.Instance.DragNode)
         {
-            Destroy(gameObject);
+            transform.position = new Vector3(x, 0, z);
+            this._x = x;
+            this._z = z;
+            this.X = x;
+            this.Z = z;
         }
     }
+
     /*
     public int CompareTo(Node other)
     {

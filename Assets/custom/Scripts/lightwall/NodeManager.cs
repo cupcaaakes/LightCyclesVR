@@ -9,11 +9,6 @@ public class NodeManager : MonoBehaviour
     [SerializeField]
     private Transform PlacedNodes;
 
-    [SerializeField]
-    public Transform DragNode { get; private set; }
-
-    public event Action<Node, Node> WallCreated;
-
     public List<Node> Nodes { get; private set; }
 
     public uint NodeCounter { get; private set; }
@@ -23,6 +18,17 @@ public class NodeManager : MonoBehaviour
     public GameObject Cycle;
 
     public static NodeManager Instance { get; private set; }
+
+    public Node DragNode
+    {
+        get { return _dragNode; }
+        set
+        {
+            _dragNode = value;
+        }
+    }
+
+    private Node _dragNode;
 
     private void Awake()
     {
@@ -41,12 +47,12 @@ public class NodeManager : MonoBehaviour
 
     void Start()
     {
+        // Initialize DragNode at the first node's position
+        (_dragNode, _) = InstantiateNode(Cycle.transform.position.x, Cycle.transform.position.z);
+        _dragNode.name = "DragNode";
+
         // Instantiate the first node at the origin
         var (node, _) = InstantiateNode(0, 0);
-
-        // Initialize DragNode at the first node's position
-        DragNode = Instantiate(nodePrefab, node.transform.position, Quaternion.identity, PlacedNodes.transform).transform;
-        DragNode.name = "DragNode";
     }
 
     void Update()
@@ -58,10 +64,11 @@ public class NodeManager : MonoBehaviour
         }
 
         // Update DragNode's position to match Cycle's position
-        DragNode.transform.position = Cycle.transform.position;
+        _dragNode.transform.position = Cycle.transform.position;
+        _dragNode.GetComponent<Node>().UpdatePosition(Cycle.transform.position.x, Cycle.transform.position.z);
     }
 
-    public (Node, GameObject) InstantiateNode(int x, int z)
+    public (Node, GameObject) InstantiateNode(float x, float z)
     {
         if (nodePrefab == null)
         {
@@ -87,30 +94,27 @@ public class NodeManager : MonoBehaviour
 
         return (newNode, newNodeObj);
     }
-
+    /*
     public void FinalizeDragNode()
     {
-        if (DragNode == null)
+        if (_dragNode == null)
         {
             Debug.LogError("DragNode is null. Cannot finalize.");
             return;
         }
 
         // Finalize the DragNode as a permanent node
-        Node dragNode = DragNode.GetComponent<Node>();
+        Node dragNode = _dragNode.GetComponent<Node>();
         if (dragNode != null)
         {
             if (!Nodes.Contains(dragNode))
             {
                 Nodes.Add(dragNode);
             }
-
-            // Notify WallManager to finalize the temporary wall
-            WallManager.Instance?.FinalizeTempWall();
         }
 
         // Create a new DragNode for the next wall
-        DragNode = Instantiate(nodePrefab, DragNode.transform.position, Quaternion.identity, PlacedNodes.transform).transform;
-        DragNode.name = "DragNode";
-    }
+        _dragNode = Instantiate(nodePrefab, _dragNode.transform.position, Quaternion.identity, PlacedNodes.transform).transform;
+        _dragNode.name = "DragNode";
+    }*/
 }

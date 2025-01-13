@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SteeringWheel : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class SteeringWheel : MonoBehaviour
     [SerializeField] private Transform handlebarCenter; // The center point of the handlebar
     [SerializeField] private float maxSteeringAngle = 90f; // Maximum steering angle
     [SerializeField] private float tiltSensitivity = 90f; // Sensitivity for tilt calculation
+    [SerializeField] private OVRInput.Button resetButton = OVRInput.Button.One; // Button to reset
 
     public float SteeringAngle { get; private set; }
     public float TiltAngle { get; private set; }
@@ -32,5 +34,18 @@ public class SteeringWheel : MonoBehaviour
             Vector3 targetRotation = new Vector3(TiltAngle, 0, 0); // Desired rotation
             handlebarCenter.localRotation = Quaternion.Euler(targetRotation); // Directly apply the rotation
         }
+        if (OVRInput.GetDown(resetButton))
+        {
+            ResetGame();
+        }
+    }
+
+    private void ResetGame()
+    {
+        // Reload the current active scene
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+
+        Debug.Log("Game reset!");
     }
 }

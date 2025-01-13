@@ -1544,9 +1544,9 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
+  m_VoxelSize: 0.016666668
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 54fa4da3ccb3e334180bda3dc382a3f0, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &86116235
 Transform:
@@ -1570,7 +1570,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 86116233}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41fbd79197b930547ae375e4a0658a23, type: 3}
   m_Name: 
@@ -2897,7 +2897,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b0c7191739ee1624c8a0de34c4d2dff8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7374,6 +7374,7 @@ MonoBehaviour:
   handlebarCenter: {fileID: 494099268}
   maxSteeringAngle: 45
   tiltSensitivity: 90
+  resetButton: 1
 --- !u!65 &494099265
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14275,7 +14276,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b0c7191739ee1624c8a0de34c4d2dff8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20668,7 +20669,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b0c7191739ee1624c8a0de34c4d2dff8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -26801,8 +26802,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forwardSpeed: 3
-  turnSpeed: 5
+  navMeshSampleDistance: 15
+  maxTurnAngle: 45
   deadZone: 17.5
+  initialForwardDuration: 5
   dead: 0
 --- !u!195 &2009569416
 NavMeshAgent:
@@ -27885,6 +27888,7 @@ MonoBehaviour:
   handlebarCenter: {fileID: 2102338142}
   maxSteeringAngle: 45
   tiltSensitivity: 90
+  resetButton: 1
 --- !u!4 &2102338142
 Transform:
   m_ObjectHideFlags: 0
@@ -28330,7 +28334,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: b0c7191739ee1624c8a0de34c4d2dff8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -76,7 +76,7 @@ public class Node : MonoBehaviour//, IComparable<Node>
     void Start()
     {
         UpdatePosition();
-        _height = 0.275f; // magic number. Sue me.
+        _height = 0.5f; // magic number. Sue me.
         isConnected = false;
     }
 

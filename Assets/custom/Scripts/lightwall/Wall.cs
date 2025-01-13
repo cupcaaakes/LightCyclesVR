@@ -52,6 +52,7 @@ public class Wall : MonoBehaviour
     public float MidZ { get; private set; }
     public float MidHeight { get; private set; }
 
+    public Vector3 worldVertBotLeft, worldVertTopLeft, worldVertBotRight, worldVertTopRight;
 
     /// <summary>
     /// Pretty self-explanatory. The ID of the wall. You knew that already, come on.
@@ -95,34 +96,33 @@ public class Wall : MonoBehaviour
         Transform objectTransform = gameObject.transform;
 
         // Calculate the wall's X coordinate.
-        // This is the average of the X coordinates of NodeFormerInit and NodeFormerCursor.
         MidX = (NodeStart.X + NodeEnd.X) / 2;
 
         // Calculate the wall's Z coordinate.
-        // This is the average of the Z coordinates of NodeFormerInit and NodeFormerCursor.
         MidZ = (NodeStart.Z + NodeEnd.Z) / 2;
 
         // Calculate the wall's height midpoint (within Y coordinate).
-        // This is the average of the heights of NodeFormerInit and NodeFormerCursor, 
-        // then divided by 2 to adjust for the midpoint height.
         MidHeight = ((NodeStart.Height + NodeEnd.Height) / 2) / 2;
 
-        // Set the position of the wall's objectTransform to the calculated midpoint.
+        // Update the wall position to the calculated midpoint
         objectTransform.position = new Vector3(MidX, MidHeight, MidZ);
 
-        Vector3 worldVertBotLeft, worldVertTopLeft, worldVertBotRight, worldVertTopRight;
+        // Calculate world space positions
+        Vector3 worldVertBotLeft = new Vector3(NodeStart.X, bottomHeight, NodeStart.Z);
+        Vector3 worldVertTopLeft = new Vector3(NodeStart.X, bottomHeight + NodeStart.Height, NodeStart.Z);
+        Vector3 worldVertBotRight = new Vector3(NodeEnd.X, bottomHeight, NodeEnd.Z);
+        Vector3 worldVertTopRight = new Vector3(NodeEnd.X, bottomHeight + NodeEnd.Height, NodeEnd.Z);
 
-        // Set the world positions of the vertices. Not sure why I need to disable a warning here since these are pretty important for self-explanatory reasons.
-#pragma warning disable IDE0090
-        worldVertBotLeft = new Vector3(NodeStart.X, bottomHeight, NodeStart.Z);                     // Bottom-left vertex
-        worldVertTopLeft = new Vector3(NodeStart.X, bottomHeight + NodeStart.Height, NodeStart.Z);  // Top-left vertex
-        worldVertBotRight = new Vector3(NodeEnd.X, bottomHeight, NodeEnd.Z);                        // Bottom-right vertex
-        worldVertTopRight = new Vector3(NodeEnd.X, bottomHeight + NodeEnd.Height, NodeEnd.Z);      // Top-right vertex
+        // Convert to local space
+        Vector3 localVertBotLeft = objectTransform.InverseTransformPoint(worldVertBotLeft);
+        Vector3 localVertTopLeft = objectTransform.InverseTransformPoint(worldVertTopLeft);
+        Vector3 localVertBotRight = objectTransform.InverseTransformPoint(worldVertBotRight);
+        Vector3 localVertTopRight = objectTransform.InverseTransformPoint(worldVertTopRight);
 
-        mesh.vertices = new Vector3[4] { worldVertBotLeft, worldVertTopLeft, worldVertBotRight, worldVertTopRight };
-
-        this.name = WallId + "-" + "Wall" + NodeStart.name + "-/-" + NodeEnd.name;
+        // Update the mesh vertices in local space
+        mesh.vertices = new Vector3[4] { localVertBotLeft, localVertTopLeft, localVertBotRight, localVertTopRight };
     }
+
 
     public void CreateNewWall(Node nodeStart, Node nodeEnd)
     {
@@ -136,5 +136,11 @@ public class Wall : MonoBehaviour
     {
         this._nodeStart = nodeStart;
         this._nodeEnd = nodeEnd;
+    }
+
+    public void NameWall(uint wallId)
+    {
+        WallId = wallId;
+        this.name = wallId + "-" + "Wall" + NodeStart.name + "-/-" + NodeEnd.name;
     }
 }

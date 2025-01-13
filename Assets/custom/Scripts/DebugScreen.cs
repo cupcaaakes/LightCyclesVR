@@ -31,9 +31,9 @@ public class DebugScreen : MonoBehaviour
             $"DragNodePos: {NodeManager.Instance.DragNode}\n" +
             
             $"WallPos: {wallManager.walls[0].transform.position}\n"+
-            /*
+            */
             $"Walls: {wallManager.walls.Count}\n" +
-            $"TempWall: {wallManager.tempWall}" +
+            /*$"TempWall: {wallManager.tempWall}" +
             *//*
             $"NSPos: {wallManager.walls[0].NodeStart.transform.position}\n" +
             $"NEPos: {wallManager.walls[0].NodeEnd.transform.position}\n" +
@@ -43,9 +43,10 @@ public class DebugScreen : MonoBehaviour
             $"NEPos: {wallManager.walls[0].NodeEnd.transform.position}\n" +
         */
             //$"DZone1: {cycle1.DeadZoneActive}\n" +
-            //$"Nodes: {NodeManager.Instance.Nodes.Count}\n" +
-            $"LastNode: {NodeManager.Instance.Nodes[^1]}\n" +
-            $"Walls: {wallManager.walls.Count}\n" +
+            $"Nodes: {NodeManager.Instance.Nodes.Count}\n" +
+            //$"LastNode: {NodeManager.Instance.Nodes[^1]}\n" +
+            //$"LstWllNSt:{wallManager.walls[^2].NodeStart}\n" +
+            //$"LstWllNEn:{wallManager.walls[^2].NodeEnd}\n" +
             "end debug";
     }
 

@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class Node : MonoBehaviour//, IComparable<Node>
 {
+
+    public bool isConnected;
+
     /// <summary>
     /// Private X value of the node.
     /// </summary>
@@ -74,6 +77,7 @@ public class Node : MonoBehaviour//, IComparable<Node>
     {
         UpdatePosition();
         _height = 0.275f; // magic number. Sue me.
+        isConnected = false;
     }
 
     /// <summary>

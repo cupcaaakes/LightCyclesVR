@@ -53,7 +53,7 @@ public class NodeManager : MonoBehaviour
         _dragNode.name = "DragNode";
 
         // Instantiate the first node at the origin
-        var (node, _) = InstantiateNode(0, 0);
+        //var (node, _) = InstantiateNode(0, 0);
     }
 
     void Update()
@@ -110,10 +110,10 @@ public class NodeManager : MonoBehaviour
                 oldWall = WallManager.Instance.walls[^1];
                 oldWall.UpdateWall(newNode, oldWall.NodeStart);
             }
-            */
+            
             // Create a wall between DragNode and the new node
             Wall newWall = WallManager.Instance.CreateWall(DragNode, newNode);
-            WallManager.Instance.walls.Add(newWall);
+            WallManager.Instance.walls.Add(newWall);*/
             // Wait for half a second
             yield return new WaitForSeconds(0.5f);
 

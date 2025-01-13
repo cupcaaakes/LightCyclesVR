@@ -44,7 +44,13 @@ public class WallManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateWall(walls[^1]);
+        //UpdateWall(walls[^1]);
+        if(NodeManager.Instance.Nodes.Count > 2 && NodeManager.Instance.Nodes[^2].isConnected == false)
+        {
+            Wall newWall = CreateWall(NodeManager.Instance.Nodes[^2], NodeManager.Instance.Nodes[^1]);
+            NodeManager.Instance.Nodes[^2].isConnected = true;
+            walls.Add(newWall);
+        }
     }
 
     public Wall CreateWall(Node startNode, Node endNode)
@@ -52,6 +58,7 @@ public class WallManager : MonoBehaviour
         // Create a new wall using the wall model
         GameObject wallObject = Instantiate(wallModel, Vector3.zero, Quaternion.identity, transform);
         wallObject.GetComponent<Wall>().CreateNewWall(startNode, endNode);
+        wallObject.GetComponent<Wall>().NameWall((uint)walls.Count);
         return wallObject.GetComponent<Wall>();
     }
 

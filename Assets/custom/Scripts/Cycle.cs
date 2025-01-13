@@ -20,6 +20,8 @@ public class Cycle : MonoBehaviour
         // Move the motorcycle forward at a constant speed
         transform.Translate(Vector3.right * forwardSpeed * Time.deltaTime);
 
+        transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.Euler(0, 100, 0), Time.deltaTime);
+
         // Rotate the motorcycle based on the steering angle
         if (steeringWheel != null)
         {
@@ -29,6 +31,17 @@ public class Cycle : MonoBehaviour
 
             // Apply the yaw rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * targetRotation, Time.deltaTime);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // Check if the collided object has the "Collidable" tag
+        if (collision.gameObject.CompareTag("Collidable"))
+        {
+            // Stop the motorcycle
+            forwardSpeed = 0;
+            Debug.Log("Collision with a Collidable object occurred.");
         }
     }
 }

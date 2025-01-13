@@ -59,14 +59,17 @@ public class Wall : MonoBehaviour
     /// </summary>
     public uint WallId { get; set; }
 
-
+    private BoxCollider wallCollider;
 
     /// <summary>
     /// Called immediately upon wall creation, before Start().
     /// </summary>
     void Awake()
     {
-
+        if (!TryGetComponent<BoxCollider>(out wallCollider))
+        {
+            wallCollider = gameObject.AddComponent<BoxCollider>();
+        }
     }
 
     // Start is called before the first frame update
@@ -107,6 +110,8 @@ public class Wall : MonoBehaviour
         // Update the wall position to the calculated midpoint
         objectTransform.position = new Vector3(MidX, MidHeight, MidZ);
 
+        UpdateCollider();
+
         // Calculate world space positions
         Vector3 worldVertBotLeft = new Vector3(NodeStart.X, bottomHeight, NodeStart.Z);
         Vector3 worldVertTopLeft = new Vector3(NodeStart.X, bottomHeight + NodeStart.Height, NodeStart.Z);
@@ -119,10 +124,39 @@ public class Wall : MonoBehaviour
         Vector3 localVertBotRight = objectTransform.InverseTransformPoint(worldVertBotRight);
         Vector3 localVertTopRight = objectTransform.InverseTransformPoint(worldVertTopRight);
 
+        
+
         // Update the mesh vertices in local space
         mesh.vertices = new Vector3[4] { localVertBotLeft, localVertTopLeft, localVertBotRight, localVertTopRight };
+
+
     }
 
+    private void UpdateCollider()
+    {
+        if (wallCollider == null) return;
+
+        // Calculate the center of the collider
+        Vector3 colliderCenter = new Vector3(MidX, MidHeight, MidZ);
+
+        // Calculate dimensions
+        float colliderWidth = Vector3.Distance(new Vector3(NodeStart.X, 0, NodeStart.Z), new Vector3(NodeEnd.X, 0, NodeEnd.Z));
+        float colliderHeight = Mathf.Abs(NodeStart.Height) + Mathf.Abs(bottomHeight);
+        float colliderDepth = 0.1f; // Thin depth for a wall
+
+        // Update the collider size
+        wallCollider.size = new Vector3(colliderWidth, colliderHeight, colliderDepth);
+
+        // Update the collider center
+        wallCollider.center = transform.InverseTransformPoint(colliderCenter);
+
+        // Calculate the rotation of the collider
+        Vector3 direction = new Vector3(NodeEnd.X - NodeStart.X, 0, NodeEnd.Z - NodeStart.Z).normalized;
+        float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
+
+        // Apply rotation to the collider by adjusting the object's rotation
+        transform.rotation = Quaternion.Euler(0, -angle, 0);
+    }
 
     public void CreateNewWall(Node nodeStart, Node nodeEnd)
     {

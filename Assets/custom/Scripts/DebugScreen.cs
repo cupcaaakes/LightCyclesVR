@@ -5,8 +5,8 @@ public class DebugScreen : MonoBehaviour
 {
     [SerializeField] private SteeringWheel steeringWheel; // Reference to the SteeringWheel class
     [SerializeField] private TMP_Text displayText; // Assign in the Inspector
-    [SerializeField] private NodeManager nodeManager;
-    [SerializeField] private WallManager wallManager;
+    [SerializeField] private NodeManagerBlue nodeManager;
+    [SerializeField] private WallManagerBlue wallManager;
     [SerializeField] private Cycle cycle1;
 
     private void Update()

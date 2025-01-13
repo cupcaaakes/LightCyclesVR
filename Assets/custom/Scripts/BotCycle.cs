@@ -27,14 +27,14 @@ public class BotCycle : MonoBehaviour
             //transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.Euler(0, 100, 0), Time.deltaTime);
 
             // Rotate the motorcycle based on the steering angle
-            /*
+            
             float steeringAngle = Random.Range(-45f, 45f);
             Quaternion targetRotation = (steeringAngle < deadZone && steeringAngle > -deadZone) ? Quaternion.identity : Quaternion.Euler(0, (steeringAngle * turnSpeed), 0);
             DeadZoneActive = (steeringAngle < deadZone && steeringAngle > -deadZone) ? true : false;
 
             // Apply the yaw rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * targetRotation, Time.deltaTime);
-            */
+            
         }
     }
 

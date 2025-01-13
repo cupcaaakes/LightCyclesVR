@@ -85,12 +85,13 @@ public class Node : MonoBehaviour//, IComparable<Node>
     /// </summary>
     public void UpdatePosition()
     {
-        if (this != null && this != NodeManager.Instance.DragNode) transform.position = new Vector3(_x, 0, _z);;
+        if (this != null && this != NodeManagerBlue.Instance.DragNode) transform.position = new Vector3(_x, 0, _z);
+        else if (this != null && this != NodeManagerOrange.Instance.DragNodeOrange) transform.position = new Vector3(_x, 0, _z);
     }
 
     public void UpdatePosition(float x, float z)
     {
-        if(this == NodeManager.Instance.DragNode)
+        if(this == NodeManagerBlue.Instance.DragNode || this == NodeManagerOrange.Instance.DragNodeOrange)
         {
             transform.position = new Vector3(x, 0, z);
             this._x = x;

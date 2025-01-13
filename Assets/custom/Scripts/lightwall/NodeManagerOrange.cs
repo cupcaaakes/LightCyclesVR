@@ -3,9 +3,8 @@ using System;
 using UnityEngine;
 using System.Collections;
 
-public class NodeManager : MonoBehaviour
+public class NodeManagerOrange : MonoBehaviour
 {
-    public bool InitNodesSet { get; private set; }
 
     [SerializeField]
     private Transform PlacedNodes;
@@ -16,20 +15,20 @@ public class NodeManager : MonoBehaviour
 
     public GameObject nodePrefab;
 
-    public GameObject Cycle;
+    public GameObject BotCycle;
 
-    public static NodeManager Instance { get; private set; }
+    public static NodeManagerOrange Instance { get; private set; }
 
-    public Node DragNode
+    public Node DragNodeOrange
     {
-        get { return _dragNode; }
+        get { return _dragNodeOrange; }
         set
         {
-            _dragNode = value;
+            _dragNodeOrange = value;
         }
     }
 
-    private Node _dragNode;
+    private Node _dragNodeOrange;
 
     private void Awake()
     {
@@ -41,7 +40,6 @@ public class NodeManager : MonoBehaviour
         {
             Instance = this;
         }
-        InitNodesSet = false;
         NodeCounter = 0;
         Nodes = new List<Node>();
     }
@@ -49,8 +47,9 @@ public class NodeManager : MonoBehaviour
     void Start()
     {
         // Initialize DragNode at the first node's position
-        (_dragNode, _) = InstantiateNode(Cycle.transform.position.x, Cycle.transform.position.z);
-        _dragNode.name = "DragNode";
+        (_dragNodeOrange, _) = InstantiateNode(BotCycle.transform.position.x, BotCycle.transform.position.z);
+        _dragNodeOrange.name = "DragNodeOrange";
+        StartCoroutine(PlaceNodesAndCreateWalls());
 
         // Instantiate the first node at the origin
         //var (node, _) = InstantiateNode(0, 0);
@@ -58,15 +57,15 @@ public class NodeManager : MonoBehaviour
 
     void Update()
     {
-        if (Cycle == null)
+        if (BotCycle == null)
         {
             Debug.LogWarning("Cycle is not assigned. Please assign Cycle to update DragNode position.");
             return;
         }
 
         // Update DragNode's position to match Cycle's position
-        _dragNode.transform.position = Cycle.transform.position;
-        _dragNode.GetComponent<Node>().UpdatePosition(Cycle.transform.position.x, Cycle.transform.position.z);
+        _dragNodeOrange.transform.position = BotCycle.transform.position;
+        _dragNodeOrange.GetComponent<Node>().UpdatePosition(BotCycle.transform.position.x, BotCycle.transform.position.z);
     }
 
     public (Node, GameObject) InstantiateNode(float x, float z)
@@ -100,8 +99,9 @@ public class NodeManager : MonoBehaviour
     {
         while (true)
         {
+            
             // Place a new node
-            var (newNode, _) = InstantiateNode(DragNode.transform.position.x, DragNode.transform.position.z);
+            var (newNode, _) = InstantiateNode(DragNodeOrange.transform.position.x, DragNodeOrange.transform.position.z);
             /*
             Wall oldWall;
 
@@ -115,7 +115,7 @@ public class NodeManager : MonoBehaviour
             Wall newWall = WallManager.Instance.CreateWall(DragNode, newNode);
             WallManager.Instance.walls.Add(newWall);*/
             // Wait for half a second#
-            if (Cycle.GetComponent<Cycle>().DeadZoneActive)
+            if (BotCycle.GetComponent<BotCycle>().DeadZoneActive)
             {
                 yield return new WaitForSeconds(0.5f);
             }

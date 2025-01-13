@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallManager : MonoBehaviour
+public class WallManagerBlue : MonoBehaviour
 {
     /// <summary>
     /// Model of the wall. Set in the Unity Inspector.
@@ -18,7 +18,7 @@ public class WallManager : MonoBehaviour
     /// </summary>
     public Wall tempWall;
 
-    public static WallManager Instance { get; private set; }
+    public static WallManagerBlue Instance { get; private set; }
 
     private void Awake()
     {
@@ -35,7 +35,7 @@ public class WallManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(NodeManager.Instance.PlaceNodesAndCreateWalls());
+        StartCoroutine(NodeManagerBlue.Instance.PlaceNodesAndCreateWalls());
         /*
         tempWall = CreateWall(NodeManager.Instance.Nodes[^1], NodeManager.Instance.DragNode.GetComponent<Node>());
         walls.Add(tempWall);
@@ -45,10 +45,10 @@ public class WallManager : MonoBehaviour
     private void Update()
     {
         //UpdateWall(walls[^1]);
-        if(NodeManager.Instance.Nodes.Count > 2 && NodeManager.Instance.Nodes[^2].isConnected == false)
+        if(NodeManagerBlue.Instance.Nodes.Count > 2 && NodeManagerBlue.Instance.Nodes[^2].isConnected == false)
         {
-            Wall newWall = CreateWall(NodeManager.Instance.Nodes[^2], NodeManager.Instance.Nodes[^1]);
-            NodeManager.Instance.Nodes[^2].isConnected = true;
+            Wall newWall = CreateWall(NodeManagerBlue.Instance.Nodes[^2], NodeManagerBlue.Instance.Nodes[^1]);
+            NodeManagerBlue.Instance.Nodes[^2].isConnected = true;
             newWall.colorBlue = true;
             walls.Add(newWall);
         }

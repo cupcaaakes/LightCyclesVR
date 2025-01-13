@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cycle : MonoBehaviour
+public class BotCycle : MonoBehaviour
 {
-    [SerializeField] private SteeringWheel steeringWheel; // Reference to the SteeringWheel script
     [SerializeField] private float forwardSpeed = 10f; // Constant forward speed
     [SerializeField] private float turnSpeed = 5f; // Speed at which the motorcycle turns
     [SerializeField] private float deadZone = 5f;
@@ -28,15 +27,14 @@ public class Cycle : MonoBehaviour
             //transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.Euler(0, 100, 0), Time.deltaTime);
 
             // Rotate the motorcycle based on the steering angle
-            if (steeringWheel != null)
-            {
-                float steeringAngle = steeringWheel.SteeringAngle;
-                Quaternion targetRotation = (steeringAngle < deadZone && steeringAngle > -deadZone) ? Quaternion.identity : Quaternion.Euler(0, (steeringAngle * turnSpeed), 0);
-                DeadZoneActive = (steeringAngle < deadZone && steeringAngle > -deadZone) ? true : false;
+            /*
+            float steeringAngle = Random.Range(-45f, 45f);
+            Quaternion targetRotation = (steeringAngle < deadZone && steeringAngle > -deadZone) ? Quaternion.identity : Quaternion.Euler(0, (steeringAngle * turnSpeed), 0);
+            DeadZoneActive = (steeringAngle < deadZone && steeringAngle > -deadZone) ? true : false;
 
-                // Apply the yaw rotation
-                transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * targetRotation, Time.deltaTime);
-            }
+            // Apply the yaw rotation
+            transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * targetRotation, Time.deltaTime);
+            */
         }
     }
 
@@ -44,10 +42,10 @@ public class Cycle : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Wall") 
+        if (other.gameObject.tag == "Wall")
         {
             Wall wallComponent = other.gameObject.GetComponent<Wall>();
-            if (wallComponent == null || ((other.gameObject.GetComponent<Wall>().colorBlue == true && other.gameObject.GetComponent<Wall>().isActive == true) || other.gameObject.GetComponent<Wall>().colorBlue == false))
+            if (wallComponent == null || ((other.gameObject.GetComponent<Wall>().colorBlue == false && other.gameObject.GetComponent<Wall>().isActive == true) || other.gameObject.GetComponent<Wall>().colorBlue == true))
             {
                 Debug.Log($"Collided with {other.gameObject.name}");
                 forwardSpeed = 0;

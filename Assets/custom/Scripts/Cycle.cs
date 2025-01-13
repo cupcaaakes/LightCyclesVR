@@ -10,38 +10,45 @@ public class Cycle : MonoBehaviour
     [SerializeField] private float deadZone = 5f;
     public bool DeadZoneActive { get; private set; }
 
+    public bool dead;
+
     private void Awake()
     {
         DeadZoneActive = true;
+        dead = false;
     }
 
     private void Update()
     {
-        // Move the motorcycle forward at a constant speed
-        transform.Translate(Vector3.right * forwardSpeed * Time.deltaTime);
-
-        transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.Euler(0, 100, 0), Time.deltaTime);
-
-        // Rotate the motorcycle based on the steering angle
-        if (steeringWheel != null)
+        if (!dead)
         {
-            float steeringAngle = steeringWheel.SteeringAngle;
-            Quaternion targetRotation = (steeringAngle < deadZone && steeringAngle > -deadZone)? Quaternion.identity : Quaternion.Euler(0, -(steeringAngle * turnSpeed), 0);
-            DeadZoneActive = (steeringAngle < deadZone && steeringAngle > -deadZone) ? true : false;
+            // Move the motorcycle forward at a constant speed
+            transform.Translate(Vector3.right * forwardSpeed * Time.deltaTime);
 
-            // Apply the yaw rotation
-            transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * targetRotation, Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.Euler(0, 100, 0), Time.deltaTime);
+
+            // Rotate the motorcycle based on the steering angle
+            if (steeringWheel != null)
+            {
+                float steeringAngle = steeringWheel.SteeringAngle;
+                Quaternion targetRotation = (steeringAngle < deadZone && steeringAngle > -deadZone) ? Quaternion.identity : Quaternion.Euler(0, -(steeringAngle * turnSpeed), 0);
+                DeadZoneActive = (steeringAngle < deadZone && steeringAngle > -deadZone) ? true : false;
+
+                // Apply the yaw rotation
+                transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * targetRotation, Time.deltaTime);
+            }
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+
+    void OnTriggerEnter(Collider other)
     {
-        // Check if the collided object has the "Collidable" tag
-        if (collision.gameObject.CompareTag("Collidable"))
+        if(other.gameObject.tag == "Wall" && (other.gameObject.GetComponent<Wall>().colorBlue == true && other.gameObject.GetComponent<Wall>().isActive == true)) 
         {
-            // Stop the motorcycle
+            Debug.Log($"Collided with {other.gameObject.name}");
             forwardSpeed = 0;
-            Debug.Log("Collision with a Collidable object occurred.");
+            dead = true;
         }
     }
 }

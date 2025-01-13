@@ -13,12 +13,12 @@ GameObject:
   - component: {fileID: 1808758215716659377}
   - component: {fileID: 7482731756193568780}
   - component: {fileID: 487822521146812804}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: base_wall
-  m_TagString: Collidable
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5630967095188352376
 Transform:
@@ -92,6 +92,8 @@ MonoBehaviour:
   _nodeStart: {fileID: 0}
   _nodeEnd: {fileID: 0}
   mesh: {fileID: 0}
+  colorBlue: 0
+  isActive: 0
   worldVertBotLeft: {x: 0, y: 0, z: 0}
   worldVertTopLeft: {x: 0, y: 0, z: 0}
   worldVertBotRight: {x: 0, y: 0, z: 0}
@@ -119,7 +121,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

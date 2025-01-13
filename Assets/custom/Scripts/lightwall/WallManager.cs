@@ -49,6 +49,7 @@ public class WallManager : MonoBehaviour
         {
             Wall newWall = CreateWall(NodeManager.Instance.Nodes[^2], NodeManager.Instance.Nodes[^1]);
             NodeManager.Instance.Nodes[^2].isConnected = true;
+            newWall.colorBlue = true;
             walls.Add(newWall);
         }
     }

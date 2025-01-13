@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -47,6 +48,10 @@ public class Wall : MonoBehaviour
 
     private static float bottomHeight = -0.05f;
 
+    public bool colorBlue;
+
+    public bool isActive;
+
 
     public float MidX { get; private set; }
     public float MidZ { get; private set; }
@@ -70,13 +75,13 @@ public class Wall : MonoBehaviour
         {
             wallCollider = gameObject.AddComponent<BoxCollider>();
         }
+        isActive = false;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
-
+        StartCoroutine(DelayColliderActivation());
     }
 
     /// <summary>
@@ -176,5 +181,11 @@ public class Wall : MonoBehaviour
     {
         WallId = wallId;
         this.name = wallId + "-" + "Wall" + NodeStart.name + "-/-" + NodeEnd.name;
+    }
+
+    private IEnumerator DelayColliderActivation()
+    {
+        yield return new WaitForSeconds(2f);
+        isActive = true;
     }
 }

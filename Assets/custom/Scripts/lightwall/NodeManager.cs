@@ -114,8 +114,16 @@ public class NodeManager : MonoBehaviour
             // Create a wall between DragNode and the new node
             Wall newWall = WallManager.Instance.CreateWall(DragNode, newNode);
             WallManager.Instance.walls.Add(newWall);*/
-            // Wait for half a second
-            yield return new WaitForSeconds(0.5f);
+            // Wait for half a second#
+            if (Cycle.GetComponent<Cycle>().DeadZoneActive)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(0.25f);
+            }
+
 
         }
     }

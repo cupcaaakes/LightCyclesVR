@@ -25,13 +25,13 @@ public class Cycle : MonoBehaviour
             // Move the motorcycle forward at a constant speed
             transform.Translate(Vector3.right * forwardSpeed * Time.deltaTime);
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.Euler(0, 100, 0), Time.deltaTime);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, transform.rotation * Quaternion.Euler(0, 100, 0), Time.deltaTime);
 
             // Rotate the motorcycle based on the steering angle
             if (steeringWheel != null)
             {
                 float steeringAngle = steeringWheel.SteeringAngle;
-                Quaternion targetRotation = (steeringAngle < deadZone && steeringAngle > -deadZone) ? Quaternion.identity : Quaternion.Euler(0, -(steeringAngle * turnSpeed), 0);
+                Quaternion targetRotation = (steeringAngle < deadZone && steeringAngle > -deadZone) ? Quaternion.identity : Quaternion.Euler(0, (steeringAngle * turnSpeed), 0);
                 DeadZoneActive = (steeringAngle < deadZone && steeringAngle > -deadZone) ? true : false;
 
                 // Apply the yaw rotation
